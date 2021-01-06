@@ -1,0 +1,106 @@
+<nav id="navbar">
+  <header>C# Unity Game Timer</header>
+  <ul>
+    <li><a class="nav-link" href="#introduction">Introduction</a></li>
+    <li><a class="nav-link" href="#knowledge">What you should already know</a></li>
+    <li><a class="nav-link" href="#variables">Declaring Variables</a></li>
+    <li><a class="nav-link" href="#timer-method">Timer method</a></li>
+    <li><a class="nav-link" href="#starting-method">Starting method</a></li>
+  </ul>
+</nav>
+<main id="main-doc">
+  <section class="main-section" id="introduction">
+    <header>Introduction</header>
+    <article>
+      <p>There are many ways to end a game in unity:</p>
+        <ul>
+          <li>when the player finishes a level</li>
+          <li>when their health gets to zero</li>
+          <li>when they drive off a cliff</li>
+      </ul>
+      <p>In this documentation we will go over one way to create a game timer. This is by no means the only way to do this, but this is what I have done in multiple games and it works well.</p>
+    </article>
+  </section>
+  <section class="main-section" id="knowledge"><header>What you should already know</header>
+  <article>
+    <p>For this guide to makes sense you should have knowledge of the following subjects:</p>
+    <ul>
+      <li>Basic knowledge of the Unity game engine</li>
+      <li>Basic knowledge of C#</li>
+      <li>How to make if statements</li>
+      <li>How to create methods</li>
+      <li>How InvokeRepeating() works</li>
+    </ul>
+  </article>
+  </section>
+  <section class="main-section" id="variables"><header>Declaring Variables</header>
+    <article>
+      <p>You dont need to name your variables exactly the same, just make sure they are memorable and make sense so you or anyone else who looks/works with the code can easily identify it</p>
+      <code><span class="blue">int</span> timeLeft;
+        
+        <span class="blue">bool</span> isActive;
+        
+        <span class="blue">TextMeshProUGUI</span> timerText;</code>
+      <p>These are used to store the following:</p>
+      <ul>
+        <li><i>timeLeft</i> is used to store the length of your timer.</li>
+        <li><i>isActive</i> is how I store whether or not the game is active or not.</li>
+        <li><i>timerText</i> is a TextMeshPro UI object that I use to display the time on the game screen. You don't have to use TMPro, but I like it better than the default.</li>
+      </ul>
+    </article>
+  </section>
+  <section class="main-section" id="timer-method"><header>Timer method</header>
+    <article>
+      <p>Next we need to create a method to contain the timer operation. This is how I set it up:</p>
+      <code>void Timer()
+    {
+        if (timerActive)
+        {
+            if (timeLeft > 0)
+            {
+                timeLeft--;      
+                timerText.text ="Time left: " + timeLeft;
+            }
+            if (timeLeft == 0)
+            {
+        timerLeft = 0;
+        isActive = <span class="blue">false</span>;
+        timerText.text ="Time left: " + timeLeft;        
+        <span class="green">//here is where you put the method for ending the game, I usually name it GameOver()</span>
+            }
+        }
+        }</code>
+      <p>So what does it all mean?</p>
+      <ul>
+        <li><code>if (timerActive)</code>
+          <p>This makes it so the timer only decreases if the game is active</p></li>
+        <li><code>if (timeLeft > 0)
+            {
+                timeLeft--;      
+                timerText.text ="Time left: " + timeLeft;</code>
+          <p>So long as the timer is more than zero it will decrease by one every time it is called. It also also updates the UI to show the current ammonut of time left.</p></li>
+        <li><code>if (timeLeft == 0)
+            {
+           timeLeft = 0;
+          isActice = <span class="blue">false</span>;
+          timerText.text ="Time left: " + timeLeft;
+                <span class="green">// GameOver()</span>
+          }</code>
+          <p>This stops the game once the timer gets to zero> you should also add a method for that the program should do once the game ends which I usually name GameOver().</p></li>
+      </ul>
+      </acticle>
+  </section>
+  <section class="main-section" id="starting-method"><header>Starting Method</header>
+    <article>
+      <p>Now in order to make this work you need to instantiate this method. You can also do this multiple ways, but here is a simple version I use.</p>
+      <code>void StartGame()
+    {
+        isActive = true;
+        timeLeft = 60;       
+        InvokeRepeating(<span class="orange">"Timer"</span>, 1, 1);
+        }</code>
+      </p>This is a pretty straight forward method that activates the game, creates a length on the timer, and activates the Timer method every second.</p>
+  <p>You have done it! that is all you need to do to make a simple timer for your game.</p>
+  </article>
+</section>
+</main>
